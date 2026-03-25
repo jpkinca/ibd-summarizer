@@ -1,0 +1,10 @@
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+# Railway cron schedule — set this in the Railway dashboard:
+# Schedule: 0 0 * * 1-5
+# (midnight UTC Mon-Fri = 7pm ET = ~1pm NZDT next day)
+#
+# Or use: 0 4 * * 2-6
