@@ -8,6 +8,7 @@ from discord_webhook import DiscordWebhook
 
 DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_URL')
 ANTHROPIC_API_KEY = os.getenv('ANTHROPIC_API_KEY')
+ANTHROPIC_MODEL = os.getenv('ANTHROPIC_MODEL', 'claude-opus-4-5')
 TITLE_KEYWORDS = os.getenv('TITLE_KEYWORDS', 'Stock Market Today')
 CHANNEL_URL = 'https://www.youtube.com/@investorsbusinessdaily/videos'
 
@@ -73,7 +74,7 @@ Transcript:
 
 """
     response = client.messages.create(
-        model="claude-3-5-sonnet-20241022",
+        model=ANTHROPIC_MODEL,
         max_tokens=1024,
         messages=[{"role": "user", "content": prompt}]
     )
@@ -101,6 +102,11 @@ def main():
         sub_path = download_subs(video_url)
         transcript = parse_vtt(sub_path)
         summary = summarize_transcript(transcript)
+        print("\n===== SUMMARY =====")
+        print(summary)
+        print("===================\n")
+        with open('last_summary.txt', 'w', encoding='utf-8') as f:
+            f.write(summary)
         send_to_discord(f"**IBD Stock Market Today Summary**\n\n{summary}")
         print("Summary sent to Discord")
         # Clean up
