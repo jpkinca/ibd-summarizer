@@ -129,3 +129,4 @@ dmypy.json
 # Temporary files
 temp*
 *.tmp
+last_summary.txt
